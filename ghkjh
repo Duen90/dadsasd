@@ -1,0 +1,22 @@
+from datetime import datetime
+
+# Current date until yesterday
+end_date = datetime.now().strftime('%Y-%m-%d')
+
+# Modified cell contents
+modified_cells = []
+for cell in notebook.cells:
+    if cell.cell_type == 'code':
+        if 'yf.download(' in cell.source:
+            cell.source = f'data = yf.download("^GSPC", start="2024-01-01", end="{end_date}")\n'
+    modified_cells.append(cell)
+
+# Update the notebook with modified cells
+notebook.cells = modified_cells
+
+# Save the modified notebook
+modified_notebook_path = '/mnt/data/yahoo_finance_sp500_data_extraction.ipynb'
+with open(modified_notebook_path, 'w', encoding='utf-8') as f:
+    nbformat.write(notebook, f)
+
+modified_notebook_path
